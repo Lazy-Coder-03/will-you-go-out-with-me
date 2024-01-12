@@ -9,7 +9,7 @@ To run this web application, follow these steps:
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/lazy-coder-03/go-out-with-me.git
+   git clone https://github.com/lazy-coder-03/will-you-go-out-with-me.git
    ```
 
 2. Open the project directory:
