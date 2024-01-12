@@ -47,7 +47,7 @@ function draw() {
 
     if (mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0) {
       if(width<height){
-        yesBtn.moveBtn(mouseX, mouseY, 48);
+        yesBtn.moveBtn(mouseX, mouseY, 5);
       }
       else{
         yesBtn.moveBtn(mouseX, mouseY, 10);
