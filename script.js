@@ -46,7 +46,12 @@ function draw() {
     pop();
 
     if (mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0) {
-      yesBtn.moveBtn(mouseX, mouseY, 12);
+      if(width<height){
+        yesBtn.moveBtn(mouseX, mouseY, 48);
+      }
+      else{
+        yesBtn.moveBtn(mouseX, mouseY, 10);
+      }
     }
     if (noBtn.isMouseOver()) {
       tx = random(100, window.innerWidth - 100);
