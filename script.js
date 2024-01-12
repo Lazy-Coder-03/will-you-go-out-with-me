@@ -8,6 +8,7 @@ var tx,
 var yesBtn, noBtn, backBtn;
 var myGif, yesGif, customFont;
 var accepted = false;
+var started=false;
 
 function preload() {
   myGif = loadImage("giphy.gif");
@@ -62,7 +63,9 @@ function draw() {
     } else {
       yesBtn.bgcol = "#FFB6C1"; // Reset the background color when not clicked
     }
-    yesBtn.update();
+    if(started){
+      yesBtn.update();
+    }
     noBtn.show();
     yesBtn.show();
   } else {
@@ -84,6 +87,13 @@ function draw() {
       window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
     }
   }
+}
+
+function mouseClicked() {
+  started=true;
+  yesBtn.resetClicked();
+  noBtn.resetClicked();
+  backBtn.resetClicked();
 }
 
 
