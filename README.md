@@ -9,13 +9,13 @@ To run this web application, follow these steps:
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/lazy-coder-03/go-out-with-me.git
+   git clone https://github.com/lazy-coder-03/will-you-go-out-with-me.git
    ```
 
 2. Open the project directory:
 
    ```bash
-   cd go-out-with-me
+   cd will-you-go-out-with-me
    ```
 
 3. Open the `index.html` file in a web browser.
