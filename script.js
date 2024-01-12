@@ -89,7 +89,7 @@ function draw() {
   }
 }
 
-function mouseClicked() {
+function mousePressed() {
   started=true;
   yesBtn.resetClicked();
   noBtn.resetClicked();
