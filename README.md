@@ -15,7 +15,7 @@ To run this web application, follow these steps:
 2. Open the project directory:
 
    ```bash
-   cd go-out-with-me
+   cd will-you-go-out-with-me
    ```
 
 3. Open the `index.html` file in a web browser.
