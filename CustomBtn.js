@@ -1,9 +1,10 @@
 class CustomBtn {
     constructor(x, y, w, h, bgcol = "black", col = "white", txt = "") {
-        this.x = x;
-        this.y = y;
+        this.pos = createVector(x, y);
         this.w = w;
         this.h = h;
+        this.vel = createVector(0, 0);
+        this.acc = createVector(0, 0);
         this.bgcol = bgcol;
         this.col = col;
         this.txt = txt;
@@ -12,19 +13,21 @@ class CustomBtn {
     }
 
     setPos(x, y) {
-        this.x = x;
-        this.y = y;
+        this.pos.x = x;
+        this.pos.y = y;
+    }
+
+    applyForce(force) {
+        this.acc.add(force);
     }
 
     clicked() {
-        if (this.isMouseOver()&&mouseIsPressed) {
+        if (this.isMouseOver() && mouseIsPressed) {
             this.isClicked = true;
-
         } else {
             this.isClicked = false;
         }
     }
-
 
     resetClicked() {
         this.isClicked = false;
@@ -35,12 +38,11 @@ class CustomBtn {
             this.castShadow();
         }
         push();
-        translate(this.x, this.y);
+        translate(this.pos.x, this.pos.y);
         rectMode(CENTER);
         //actual button
         fill(this.bgcol);
         noStroke();
-        // stroke("black");
         rect(0, 0, this.w, this.h, 10);
         textAlign(CENTER, CENTER);
         fill(this.col);
@@ -49,24 +51,15 @@ class CustomBtn {
         pop();
     }
 
+    moveBtnWithGravity(targetX, targetY, gravityStrength) {
+        let gravity = createVector(targetX - this.pos.x, targetY - this.pos.y);
+        let distance = gravity.mag();
+        gravity.normalize();
+        gravity.mult(gravityStrength);
 
-    moveBtn(targetX, targetY, speed) {
-        let dx = targetX - this.x;
-        let dy = targetY - this.y;
-        let distance = dist(this.x, this.y, targetX, targetY);
-        let angle = atan2(dy, dx);
-        let vx = cos(angle) * speed;
-        let vy = sin(angle) * speed;
+        this.applyForce(gravity);
 
-        // Adjust speed based on the distance
-        let adjustedSpeed = min(speed, distance);
-
-        this.x += vx;
-        this.y += vy;
-
-        if (distance <= adjustedSpeed) {
-            this.x = targetX;
-            this.y = targetY;
+        if (distance <= gravityStrength) {
             this.moving = false;
         } else {
             this.moving = true;
@@ -77,72 +70,48 @@ class CustomBtn {
         return this.moving;
     }
 
-    setPos(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-
     isMouseOver() {
         return (
-            mouseX > this.x - this.w / 2 &&
-            mouseX < this.x + this.w / 2 &&
-            mouseY > this.y - this.h / 2 &&
-            mouseY < this.y + this.h / 2
+            mouseX > this.pos.x - this.w / 2 &&
+            mouseX < this.pos.x + this.w / 2 &&
+            mouseY > this.pos.y - this.h / 2 &&
+            mouseY < this.pos.y + this.h / 2
         );
     }
 
     castShadow() {
-        // Calculate the distance and angle between the button and the mouse cursor
-        let dx = mouseX - this.x;
-        let dy = mouseY - this.y;
-        let distance = dist(this.x, this.y, mouseX, mouseY);
+        let dx = mouseX - this.pos.x;
+        let dy = mouseY - this.pos.y;
+        let distance = dist(this.pos.x, this.pos.y, mouseX, mouseY);
         let angle = atan2(dy, dx);
 
-        // Calculate the shadow position based on the opposite direction of the angle
-        let shadowDistance = 10; // Set your desired shadow distance
+        let shadowDistance = 10;
 
         push();
         rectMode(CENTER);
 
-        // Draw multiple semi-transparent rectangles to simulate blur
         for (let i = 0; i < 5; i++) {
-            let blurAmount = i * 2; // Adjust the blur amount as needed
-            let blurX = this.x - cos(angle) * (shadowDistance + blurAmount);
-            let blurY = this.y - sin(angle) * (shadowDistance + blurAmount);
+            let blurAmount = i * 2;
+            let blurX = this.pos.x - cos(angle) * (shadowDistance + blurAmount);
+            let blurY = this.pos.y - sin(angle) * (shadowDistance + blurAmount);
 
-            fill(85, 85, 85, 100 / (i + 1)); // Adjust the alpha for each rectangle
+            fill(85, 85, 85, 100 / (i + 1));
             noStroke();
             rect(blurX, blurY, this.w, this.h, 10);
         }
         pop();
     }
 
-    
-    //   setTargetPos(tx, ty) {
-    //     this.targetX = tx;
-    //     this.targetY = ty;
-    //   }
+    update() {
+        this.vel.add(this.acc);
+        this.vel.limit(10);
+        this.pos.add(this.vel);
+        this.vel.mult(0.98); // Reset velocity
+        if(this.vel.mag() <= 0.2) {
 
-    //   moveBtn(speed) {
-    //     if (this.moving) {
-    //       let dx = this.targetX - this.x;
-    //       let dy = this.targetY - this.y;
-    //       let distance = dist(this.x, this.y, this.targetX, this.targetY);
-    //       let angle = atan2(dy, dx);
-    //       let vx = cos(angle) * speed;
-    //       let vy = sin(angle) * speed;
-
-    //       // Adjust speed based on the distance
-    //       let adjustedSpeed = min(speed, distance);
-
-    //       this.x += vx;
-    //       this.y += vy;
-
-    //       if (distance <= adjustedSpeed) {
-    //         this.x = this.targetX;
-    //         this.y = this.targetY;
-    //         this.moving = false;
-    //       }
-    //     }
-    //   }
+            this.vel.mult(0);
+            this.acc.mult(0);
+        }
+        this.acc.mult(0); // Reset acceleration
+    }
 }
