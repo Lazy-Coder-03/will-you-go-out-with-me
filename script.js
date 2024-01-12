@@ -27,12 +27,13 @@ function setup() {
   noBtn = new CustomBtn(cx + width * 0.15, cy + 0.2 * height, min(0.1 * width, 100), min(0.1 * height, 50), "#FFB6C1", "#333", "No");
   backBtn = new CustomBtn(cx, cy + 0.2 * height, min(0.1 * width, 100), min(0.1 * height, 50), "#A1C6EA", "#333", "Home");
   textFont(customFont);
+  frameRate(24);
 }
 
 function draw() {
 
-  cx = window.innerWidth / 2;
-  cy = window.innerHeight / 2;
+  // cx = window.innerWidth / 2;
+  // cy = window.innerHeight / 2;
   if (!accepted) {
     background("#A1C6EA");
     image(myGif, cx - myGif.width / 2, cy - 0.4 * height);
@@ -45,7 +46,7 @@ function draw() {
     pop();
 
     if (mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0) {
-      yesBtn.moveBtn(mouseX, mouseY, 2);
+      yesBtn.moveBtn(mouseX, mouseY, 12);
     }
     if (noBtn.isMouseOver()) {
       tx = random(100, window.innerWidth - 100);
