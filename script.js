@@ -23,11 +23,11 @@ function setup() {
   cy = window.innerHeight / 2;
   mxdim = max(width, height)
   accepted = false;
-  yesBtn = new CustomBtn(cx - width * 0.15, cy + 0.2 * height, min(0.1 * width, 100), min(0.1 * height, 50), "#FFB6C1", "#333", "Yes");
-  noBtn = new CustomBtn(cx + width * 0.15, cy + 0.2 * height, min(0.1 * width, 100), min(0.1 * height, 50), "#FFB6C1", "#333", "No");
-  backBtn = new CustomBtn(cx, cy + 0.2 * height, min(0.1 * width, 100), min(0.1 * height, 50), "#A1C6EA", "#333", "Home");
+  yesBtn = new CustomBtn(cx - width * 0.25, cy + 0.2 * height, min(0.1 * width, 100), min(0.1 * height, 50), "#FFB6C1", "#333", "Yes");
+  noBtn = new CustomBtn(cx + width * 0.25, cy + 0.2 * height, min(0.1 * width, 100), min(0.1 * height, 50), "#FFB6C1", "#333", "No");
+  backBtn = new CustomBtn(cx, cy + 0.25 * height, min(0.1 * width, 100), min(0.1 * height, 50), "#A1C6EA", "#333", "Home");
   textFont(customFont);
-  frameRate(24);
+  //frameRate(24);
 }
 
 function draw() {
@@ -47,10 +47,10 @@ function draw() {
 
     if (mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0) {
       if(width<height){
-        yesBtn.moveBtn(mouseX, mouseY, 5);
+        yesBtn.moveBtn(mouseX, mouseY, 2);
       }
       else{
-        yesBtn.moveBtn(mouseX, mouseY, 10);
+        yesBtn.moveBtn(mouseX, mouseY, 6);
       }
     }
     if (noBtn.isMouseOver()) {
